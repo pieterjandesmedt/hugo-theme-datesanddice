@@ -1,13 +1,25 @@
 <!DOCTYPE html>
-<html lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}">
+<html
+  lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}"
+  style="
+    background: url(/images/big-potato-aTUQ0UDv8JM-unsplash.jpg) no-repeat fixed
+      center;
+    background-size: cover;
+  "
+>
   {{ partial "header" . }}
-  <body>
-    {{ partial "hero" . }} {{/*{{ partial "navbar" . }} {{ partial "tags" . }}
-    {{ if .Site.Params.Tiles.enable }} {{ partial "tile" (where
-    .Site.RegularPages.ByWeight.Reverse "Section" "portfolio") }} {{ end }} */}}
-    {{/* {{ if .Site.Params.Two.enable }} {{ partial "two" . }} {{ end }} {{ if
-    .Site.Params.Footer.enable }} {{ partial "footer" . }} {{ end }} {{ partial
-    "js" . }} */}} {{ partial "contact/newsletter" . }} {{/*
+  <body style="min-height: 100%">
+    <div class="columns is-vcentered">
+      <div class="column">
+        {{ partial "hero" . }} {{/*{{ partial "navbar" . }} {{ partial "tags" .
+        }} {{ if .Site.Params.Tiles.enable }} {{ partial "tile" (where
+        .Site.RegularPages.ByWeight.Reverse "Section" "portfolio") }} {{ end }}
+        */}} {{/* {{ if .Site.Params.Two.enable }} {{ partial "two" . }} {{ end
+        }} {{ if .Site.Params.Footer.enable }} {{ partial "footer" . }} {{ end
+        }} {{ partial "js" . }} */}} {{ partial "contact/newsletter" . }}
+      </div>
+    </div>
+    {{/*
     <script>
       var options = {
         container: "#tiles .container .columns",

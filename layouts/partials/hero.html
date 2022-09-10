@@ -2,11 +2,19 @@
   <div class="hero-body pb-2">
     <div class="container">
       <h1 class="is-size-1 is-family-secondary">
-        <a href="/" class="has-text-dark">
+        <a
+          href="/"
+          class="has-text-dark"
+          style="text-shadow: 0 0 1px white, 0 0 10px white, 0 0 50px white"
+        >
           <div>
             <img
               src="/images/noun-heart-dice-1.png"
-              style="width: 100px; height: 100px"
+              style="
+                width: 100px;
+                height: 100px;
+                text-shadow: 0 0 1px white, 0 0 10px white, 0 0 50px white;
+              "
             />
           </div>
           {{ with .Site.Title }}{{ . }}{{ end }}
