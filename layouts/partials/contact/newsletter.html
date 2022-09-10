@@ -10,6 +10,12 @@
       <label class="label" for="email"
         >{{ .Site.Params.contact.newsletterName }}</label
       >
+      <div class="field is-hidden">
+        <label class="label" for="phonenumber"
+          >Don’t fill this out if you’re human</label
+        >
+        <input class="input" type="text" name="phonenumber" id="phonenumber" />
+      </div>
       <div class="field has-addons">
         <div class="control is-expanded">
           <input
@@ -28,18 +34,6 @@
             class="button is-primary"
           />
         </div>
-      </div>
-      <div class="field is-hidden">
-        <label class="label" for="phonenumber"
-          >Don’t fill this out if you’re human</label
-        >
-        <input
-          class="input"
-          type="text"
-          name="phonenumber"
-          id="phonenumber"
-          required
-        />
       </div>
     </form>
   </div>
