@@ -1,0 +1,20 @@
+<section class="hero">
+  <div class="hero-body pb-2">
+    <div class="container">
+      <h1 class="is-size-1 is-family-secondary">
+        <a href="/" class="has-text-dark">
+          <div>
+            <img
+              src="/images/noun-heart-dice-1.png"
+              style="width: 100px; height: 100px"
+            />
+          </div>
+          {{ with .Site.Title }}{{ . }}{{ end }}
+        </a>
+      </h1>
+      {{ with .Site.Params.Banner.subtitle }}
+      <h4 class="subtitle">{{ . | safeHTML }}</h4>
+      {{ end }}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,10 @@
+name: datesanddice
+license: proprietary
+description: Theme for datesanddice
+tags:
+  - contact form
+  - blog
+features:
+  - blog
+  - contact form
+min_version: 0.79
