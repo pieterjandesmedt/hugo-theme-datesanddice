@@ -9,36 +9,37 @@
 >
   {{ partial "header" . }}
   <body style="min-height: 100%">
-    <div class="columns is-vcentered">
+	{{ partial "navbar" . }}
+    <div class="columns">
       <div class="column">
-        {{ partial "hero" . }} {{/*{{ partial "navbar" . }} {{ partial "tags" .
+        {{ partial "hero" . }} {{/*{{ partial "tags" .
         }} {{ if .Site.Params.Tiles.enable }} {{ partial "tile" (where
         .Site.RegularPages.ByWeight.Reverse "Section" "portfolio") }} {{ end }}
         */}} {{/* {{ if .Site.Params.Two.enable }} {{ partial "two" . }} {{ end
         }} {{ if .Site.Params.Footer.enable }} {{ partial "footer" . }} {{ end
-        }} {{ partial "js" . }} */}} {{ partial "contact/newsletter" . }}
+        }} {{ partial "js" . }} */}}
       </div>
     </div>
-    {{/*
-    <script>
-      var options = {
-        container: "#tiles .container .columns",
-        columns: 1,
-        mobileFirst: true,
-        margin: 20,
-        breakAt: {
-          600: 2,
-          900: 3,
-          1200: 4,
-        },
-      };
+	<div class="container">
+		{{ range where .Site.RegularPages "Section" "front"}}
+		<div class="columns mb-6">
+			<div class="column is-8 is-offset-2 box p-6">
 
-      var macy = Macy(options);
-      macy.runOnImageLoad(function () {
-        macy.recalculate(true, true);
-        // myLazyLoad.update();
-      });
-    </script>
-    */}}
+				<div class="content">
+					<h2 class="title">{{ .Title }}</h2>
+					{{ .Content }}
+					{{ partial "events-button" . }}
+				</div>
+
+			</div>
+		</div>
+		{{ end }}
+
+		<div class="columns">
+			<div class="column is-8 is-offset-2 box p-6">
+				{{ partial "contact/mailchimp" . }}
+			</div>
+		</div>
+	</div>
   </body>
 </html>

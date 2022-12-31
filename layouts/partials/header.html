@@ -5,11 +5,14 @@
     name="viewport"
     content="width=device-width, initial-scale=1, user-scalable=no"
   />
-  {{ with .Site.Params.description }}
-  <meta name="description" content="{{ . }}" />
-  {{ end }} {{ with .Site.Params.name }}
-  <meta name="author" content="{{ . }}" />
-  {{ end }} {{ hugo.Generator }}
+
+  {{ with .Site.Params.meta }}
+  {{- range . -}}
+  {{- range $key, $value := . -}}<meta name="{{ $key }}" content="{{ $value }}" />{{ end }}
+  {{ end }}
+  {{ end }}
+  {{ hugo.Generator }}
+
   <title>
     {{ .Title }}{{ if not .IsHome }} &middot; {{ .Site.Title }}{{ end }}
   </title>
@@ -65,6 +68,8 @@
   <meta name="msapplication-TileColor" content="#ffffff" />
   <meta name="msapplication-config" content="/icons/browserconfig.xml" />
   <meta name="theme-color" content="#ffffff" />
+
+  <script src="https://kit.fontawesome.com/b6aff1640f.js" crossorigin="anonymous"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

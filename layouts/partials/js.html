@@ -2,17 +2,29 @@
 
 {{ template "_internal/google_analytics_async.html" . }}
 
-<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+<script language="JavaScript" type="text/javascript">
+document.addEventListener('DOMContentLoaded', () => {
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+  // Get all "navbar-burger" elements
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-<script type="text/javascript">
-	const observer = lozad('.lozad', {
-		rootMargin: '100px 0px', // syntax similar to that of CSS Margin
-	});
-	observer.observe();
+  // Add a click event on each of them
+  $navbarBurgers.forEach( el => {
+    el.addEventListener('click', () => {
+
+      // Get the target from the "data-target" attribute
+      const target = el.dataset.target;
+      const $target = document.getElementById(target);
+
+      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+      el.classList.toggle('is-active');
+      $target.classList.toggle('is-active');
+
+    });
+  });
+
+});
 </script>
-
 {{ range .Site.Params.custom_js }}
 <script src="{{ . | absURL }}"></script>
 {{ end }}

@@ -1,7 +1,7 @@
 ---
-title: { { replace .Name "-" " " | title } }
+title: {{ replace .Name "-" " " | title }}
 subtitle:
-date: { { .Date } }
+date: {{ .Date }}
 tags:
 images:
 weight: 1

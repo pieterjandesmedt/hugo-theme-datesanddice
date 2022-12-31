@@ -1,25 +1,39 @@
-<!DOCTYPE HTML>
-<html lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}">
-
-{{ partial "header.html" . }}
-
-<body class="single-page" id="{{ delimit (last 2 (split (urlize .RelPermalink) "/")) "" }}">
-
-	{{ partial "hero" . }}
+<!DOCTYPE html>
+<html
+  lang="{{ with .Site.LanguageCode }}{{ . }}{{ else }}en-US{{ end }}"
+  style="
+    background: url(/images/big-potato-aTUQ0UDv8JM-unsplash.jpg) no-repeat fixed
+      center;
+    background-size: cover;
+  "
+>
+  {{ partial "header" . }}
+  <body style="min-height: 100%">
 	{{ partial "navbar" . }}
-	<!-- One -->
-	<section class="section">
-		<div class="container">
+    <div class="columns">
+      <div class="column">
+        {{ partial "hero" . }} {{/*{{ partial "tags" .
+        }} {{ if .Site.Params.Tiles.enable }} {{ partial "tile" (where
+        .Site.RegularPages.ByWeight.Reverse "Section" "portfolio") }} {{ end }}
+        */}} {{/* {{ if .Site.Params.Two.enable }} {{ partial "two" . }} {{ end
+        }} {{ if .Site.Params.Footer.enable }} {{ partial "footer" . }} {{ end
+        }} {{ partial "js" . }} */}}
+      </div>
+    </div>
+	<div class="container">
+		<div class="columns mb-6">
+			<div class="column is-8 is-offset-2 box p-6 content">
 			<header>
 				{{ with .Title }}
-				<h2 class="is-size-2">{{ . }}</h2>
+				<h2 class="title is-spaced is-2">{{ . }}</h2>
 				{{ end }} {{ with .Params.subtitle }}
-				<h3 class="is-size-3">{{ . }}</h3>
+				<h3 class="subtitle is-4">{{ . }}</h3>
 				{{ end }}
 			</header>
-			<div class="content">
+			<div id="content">
 				{{ .Content }}
 			</div>
+
 			<div class="gallery">
 				{{ with .Params.images }} {{ with (index . 0) }}
 				<div class="first-image">
@@ -39,39 +53,80 @@
 			</div>
 
 			{{ partial "article-tags" . }}
+			{{ if ne (.Page.RelPermalink) "/static/volgende-events/" }}
+			<div class="mt-6">
+			{{ partial "events-button" . }}
+			</div>
+			{{ end }}
+			</div>
 		</div>
-	</section>
-	{{ if .Site.Params.footer.enable }} {{ partial "footer.html" . }} {{ end }}
+
+		<div class="columns">
+			<div class="column is-8 is-offset-2 box p-6">
+				{{ partial "contact/mailchimp" . }}
+			</div>
+		</div>
 	</div>
-	{{ partial "js.html" . }}
-
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
-	<script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
-
-	<script type="text/javascript">
-		const lightbox = GLightbox({
-			selector: '.glightbox',
-			touchNavigation: true,
-			loop: true,
-		});
-	</script>
-
+	{{ if eq (.Page.RelPermalink) "/static/volgende-events/" }}
 	<script>
-		var options = {
-			container: '#images',
-			columns: 1,
-			mobileFirst: true,
-			margin: 20,
-			breakAt: {
-				600: 2,
+		async function fetchEvents() {
+			const result = await fetch('/.netlify/functions/events');
+			try {
+				const events = result.json();
+				return events;
+			} catch (err) {
+				console.log(err);
 			}
-		};
+		}
 
-		var macy = Macy(options);
-		macy.runOnImageLoad(function () {
-			macy.recalculate(true, true);
-		});
+		async function load() {
+			const events = await fetchEvents();
+			try {
+				const elem = document.getElementById('content');
+				if (events.length > 0) content.innerHTML = events.map(eventToHtml);
+				else content.innerHTML = 'Er zijn geen volgende events.';
+			} catch (err) {
+				console.error(err);
+				content.innerHTML = 'Er zijn geen volgende events.';
+			}
+		}
+
+		function eventToHtml(event = {}) {
+			const heteroIcon = event.isHetero ? 'fas fa-venus-mars' : ''
+			return `
+<a href="mailto:${createMailTo(event)}">
+<div class="card has-background-info-light">
+  <div class="card-content">
+    <div class="content">
+      <h3 class="title">${event?.name}</h3>
+      <h4 class="subtitle">${event?.startDate}</h4>
+		<span class="icon-text">
+			<span class="icon has-text-info" style="display: inline-block !important"><i class="${heteroIcon}"></i></span>
+			Max: ${event.max * 2} personen.
+		</p>
+    </div>
+  </div>
+</div>
+</a>`;
+			// return `<pre>${JSON.stringify(event, null, 2)}</pre>`;
+		}
+
+		function createMailTo(event = {}) {
+			const params = new URLSearchParams();
+
+			params.set('subject', `[Dates&Dice] inschrijving ${event.name} ${event.startDate}`);
+			params.set('body', `Ik wil me graag inschrijven voor Dates & Dice event "${event.name}" op ${event.startDate}.`);
+
+			const email = 'kxexvxixnx.xdxexlxexcxlxuxyxsxexaxtxgxmxaxixlx';
+			const to = [
+				email.replaceAll('x', '').replaceAll('at', '@'),
+				'com'
+			].join('.');
+			return `${to}?${params.toString().replaceAll('+', ' ')}`;
+		}
+
+		window.onload = load;
 	</script>
-</body>
-
+	{{ end }}
+  </body>
 </html>
