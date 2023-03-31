@@ -82,12 +82,12 @@
 		async function load() {
 			const events = await fetchEvents();
 			try {
-				const elem = document.getElementById('content');
-				if (events.length > 0) content.innerHTML = events.map(eventToHtml);
-				else content.innerHTML = 'Er zijn geen volgende events.';
+				const elem = document.getElementById('events');
+				if (events.length > 0) elem.innerHTML = events.map(eventToHtml);
+				else elem.innerHTML = 'Er zijn geen volgende events.';
 			} catch (err) {
 				console.error(err);
-				content.innerHTML = 'Er zijn geen volgende events.';
+				elem.innerHTML = 'Er zijn geen volgende events.';
 			}
 		}
 
@@ -95,13 +95,13 @@
 			const heteroIcon = event.isHetero ? 'fas fa-venus-mars' : ''
 			return `
 <a href="mailto:${createMailTo(event)}">
-<div class="card has-background-info-light">
+<div class="card has-background-primary-light">
   <div class="card-content">
     <div class="content">
       <h3 class="title">${event?.name}</h3>
       <h4 class="subtitle">${event?.startDate}</h4>
 		<span class="icon-text">
-			<span class="icon has-text-info" style="display: inline-block !important"><i class="${heteroIcon}"></i></span>
+			<span class="icon has-text-primary" style="display: inline-block !important"><i class="${heteroIcon}"></i></span>
 			Max: ${event.max * 2} personen.
 		</p>
     </div>
