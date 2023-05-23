@@ -22,7 +22,7 @@
     </div>
 	<div class="container">
 		<div class="columns mb-6">
-			<div class="column is-8 is-offset-2 box p-6 content">
+			<div class="column is-8 is-offset-2 box p-6">
 			<header>
 				{{ with .Title }}
 				<h2 class="title is-spaced is-2">{{ . }}</h2>
@@ -30,7 +30,7 @@
 				<h3 class="subtitle is-4">{{ . }}</h3>
 				{{ end }}
 			</header>
-			<div id="content">
+			<div id="content" class="content">
 				{{ .Content }}
 			</div>
 
@@ -91,20 +91,53 @@
 			}
 		}
 
-		function eventToHtml(event = {}) {
+		function eventToHtml(event = {}, index = 0) {
+			const totalGameImages = 3;
 			const heteroIcon = event.isHetero ? 'fas fa-venus-mars' : ''
+			const hasDiscount = !!event.discount;
+			const hasMen = !!event?.maxMen;
+			const hasWomen = !!event?.maxWomen;
+			let freePlacesText = 'Er is nog plaats voor ';
+			if (hasMen && hasWomen) freePlacesText += `${event.maxWomen - (event.appliedWomen || 0)} vrouwen en ${event.maxMen - (event.appliedMen || 0)} mannen.`
+			if (hasMen && !hasWomen) freePlacesText += `${event.maxMen - (event.appliedMen || 0)} mannen.`
+			if (!hasMen && hasWomen) freePlacesText += `${event.maxWomen - (event.appliedWomen || 0)} vrouwen.`
+			const price = hasDiscount ?
+				`<span class="is-6" style="text-decoration: line-through;">€ ${event?.price}</span>&nbsp;<span class="has-text-primary">€ ${event?.price * (1-event?.discount)}</span>` :
+				`<span>€ ${event?.price}</span>`;
 			return `
 <a href="mailto:${createMailTo(event)}">
-<div class="card has-background-primary-light mb-3">
-  <div class="card-content">
+<div class="card mb-3">
+  <!--div class="columns">
+  <div class="column"-->
+
+  <div class="card-image">
+    <figure class="image is-5by4">
+      <img src="/images/game${(index + 1 % totalGameImages)}.jpg" alt="Bordspel">
+    </figure>
+  </div>
+  <!--/div>
+  <div class="column"-->
+  <div class="card-content p-2">
+	<div class="media">
+      <div class="media-content">
+        <p class="title is-4">${event?.name}</p>
+        <p class="subtitle is-6">${price}</p>
+      </div>
+    </div>
     <div class="content">
-      <h4 class="title">${event?.name}</h4>
-      <h5 class="subtitle mb-2">${event?.startDate}</h5>
+		<p>
+			<span class="icon" style="display: inline-block !important"><i class="mdi mdi-account-multiple"></i></span>
+			${event?.ageMin} - ${event?.ageMax} jaar</p>
+
 		<span class="icon-text">
 			<!--span class="icon has-text-primary" style="display: inline-block !important"><i class="${heteroIcon}"></i></span-->
-			Max: ${event.max * 2} personen.
+			${freePlacesText}
 		</p>
+
+		<button class="button is-primary">Inschrijven</button>
     </div>
+  <!--/div>
+  </div-->
   </div>
 </div>
 </a>`;

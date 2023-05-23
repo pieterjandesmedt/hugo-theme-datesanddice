@@ -24,6 +24,7 @@
     href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;1,400;1,600&family=Pacifico&display=swap"
     rel="stylesheet"
   />
+
   {{ $custom := resources.Get "sass/stylesheet.scss" | toCSS }} {{ $style :=
   slice $custom | resources.Concat "css/style.css" | minify | fingerprint }}
 
@@ -69,7 +70,7 @@
   <meta name="msapplication-config" content="/icons/browserconfig.xml" />
   <meta name="theme-color" content="#ffffff" />
 
-  <script src="https://kit.fontawesome.com/b6aff1640f.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css" />
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
