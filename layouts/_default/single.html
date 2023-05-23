@@ -149,10 +149,14 @@
 		}
 
 		function createMailTo(event = {}) {
+
+			const humanDateTitle = dayjs(event.startDate).format('DD/MM/YYYY');
+			const humanDateBody = dayjs(event.startDate).format('dddd D MMMM YYYY');
+
 			const params = new URLSearchParams();
 
-			params.set('subject', `[Dates&Dice] inschrijving ${event.name} ${event.startDate}`);
-			params.set('body', `Ik wil me graag inschrijven voor Dates & Dice event "${event.name}" op ${event.startDate}.`);
+			params.set('subject', `[Dates&Dice] inschrijving ${event.name} ${humanDateTitle}`);
+			params.set('body', `Ik wil me graag inschrijven voor Dates & Dice event "${event.name}" op ${humanDateBody}.`);
 
 			const email = 'kxexvxixnx.xdxexlxexcxlxuxyxsxexaxtxgxmxaxixlx';
 			const to = [
