@@ -68,7 +68,10 @@
 		</div>
 	</div>
 	{{ if eq (.Page.RelPermalink) "/static/volgende-events/" }}
+	<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/nl-be.js"></script>
 	<script>
+		dayjs.locale('nl-be');
 		async function fetchEvents() {
 			const result = await fetch('/.netlify/functions/events');
 			try {
@@ -93,7 +96,8 @@
 
 		function eventToHtml(event = {}, index = 0) {
 			const totalGameImages = 3;
-			const heteroIcon = event.isHetero ? 'fas fa-venus-mars' : ''
+			const heteroIcon = event.isHetero ? 'fas fa-venus-mars' : '';
+			const humanDate = dayjs(event.startDate).format('dddd D MMMM');
 			const hasDiscount = !!event.discount;
 			const hasMen = !!event?.maxMen;
 			const hasWomen = !!event?.maxWomen;
@@ -120,7 +124,7 @@
   <div class="card-content p-2">
 	<div class="media">
       <div class="media-content">
-        <p class="title is-4">${event?.name}</p>
+        <p class="title is-4">${event?.name}, ${humanDate}</p>
         <p class="subtitle is-6">${price}</p>
       </div>
     </div>
