@@ -61,22 +61,6 @@ body {
   }
 }
 
-.icon {
-  background: $black;
-  color: white;
-  border-radius: $radius;
-  width: 2em;
-  height: 2em;
-  display: block;
-  line-height: 2em;
-  text-align: center;
-  margin-top: 0rem;
-  font-size: 0.9em;
-  &:hover {
-    color: $blue;
-  }
-}
-
 .navbar {
   strong {
     letter-spacing: 6px;
